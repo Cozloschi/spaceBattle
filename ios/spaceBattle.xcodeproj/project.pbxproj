@@ -194,7 +194,6 @@
 				BCD35DF69FAB6D29F4E4D3BF /* Pods-spaceBattleTests.debug.xcconfig */,
 				4B29A960245995CED8AE533D /* Pods-spaceBattleTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -308,6 +307,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

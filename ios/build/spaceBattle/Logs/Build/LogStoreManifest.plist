@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>6853ACE1-8891-4140-A22A-C796499B9A58</key>
+		<key>815018E5-CCA2-4916-AC18-825584A9F655</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,13 +15,13 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>6853ACE1-8891-4140-A22A-C796499B9A58.xcactivitylog</string>
+			<string>815018E5-CCA2-4916-AC18-825584A9F655.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>E</string>
+				<string>W</string>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>spaceBattle project</string>
@@ -30,15 +30,15 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Building project spaceBattle with scheme spaceBattle and configuration Debug</string>
+			<string>Building workspace spaceBattle with scheme spaceBattle and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>592331411.00791895</real>
+			<real>592335335.81410301</real>
 			<key>timeStoppedRecording</key>
-			<real>592331415.43033803</real>
+			<real>592335348.29434204</real>
 			<key>title</key>
-			<string>Building project spaceBattle with scheme spaceBattle and configuration Debug</string>
+			<string>Building workspace spaceBattle with scheme spaceBattle and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>6853ACE1-8891-4140-A22A-C796499B9A58</string>
+			<string>815018E5-CCA2-4916-AC18-825584A9F655</string>
 		</dict>
 	</dict>
 </dict>
