@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Matter from 'matter-js'
 import { GameEngine } from 'react-native-game-engine'
 import Physics from '../../utils/Systems/Physics'
@@ -9,6 +9,7 @@ import Constants from '../../utils/Constants'
 import DefaultSpaceship from '../../components/spaceship/DefaultSpaceship'
 import DefaultProjectile from '../../components/projectile/DefaultProjectile'
 import Bottom from '../../components/map/Bottom'
+import * as Helpers from '../../utils/Helpers'
 
 
 class Game extends Component {
@@ -28,8 +29,7 @@ class Game extends Component {
     }
 
     onEvent = (e) => {
-        if (e.type === 'gameOver') {
-
+        if (e.type === Constants.DISPATCH.GAME_OVER) {
             this.setState({
                 running: false
             })
@@ -40,22 +40,28 @@ class Game extends Component {
         let engine = Matter.Engine.create({ enableSleeping: false })
         let world = engine.world
         world.gravity.y = 0.2
-        let spaceship = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT / 1.2, 50, 50, { isStatic: true, label: 'spaceship' })
-        let projectile = Matter.Bodies.circle(Constants.MAX_WIDTH / 3, Constants.MAX_HEIGHT / 6, 10, { density: 1, label: 'projectile' })
-        let bottom = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT - 20, Constants.MAX_WIDTH, 10, { density: 1, isStatic: true, label: 'bottom' })
-
+        let spaceship = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT / 1.2, 50, 50, { label: Constants.LABELS.SPACESHIP, density: 1, friction: 0.1 })
+        let projectile = Helpers.createProjectile(Constants.MAX_WIDTH / 3, Constants.MAX_HEIGHT / 12)
+        let bottom = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT - 20, Constants.MAX_WIDTH, 10, { density: 1, isStatic: true, label: Constants.LABELS.BOTTOM })
 
         Matter.World.add(world, [projectile, spaceship, bottom])
 
-        Matter.Events.on(engine, 'collisionStart', (event) => {
-            console.log(event)
-            this.gameEngine.dispatch({ type: 'gameOver' });
+        Matter.Events.on(engine, 'collisionStart', event => {
+            let collision = Helpers.checkCollisionType(event)
+            if (collision) {
+                if (collision.type === Constants.COLLISIONS.PROJECTILE_SPACESHIP)
+                    this.gameEngine.dispatch({ type: Constants.DISPATCH.GAME_OVER })
+                if (collision.type === Constants.COLLISIONS.PROJECTILE_BOTTOM) {
+                    this.gameEngine.dispatch({ type: Constants.DISPATCH.PROJECTILE_BOTTOM, body: collision.body })
+                    //this.gameEngine.dispatch({ type: Constants.DISPATCH.GAME_OVER })
+                }
+            }
         })
 
         return {
             physics: { engine: engine, world: world },
-            spaceship: { body: spaceship, size: [50, 50], backgroundColor: 'black', renderer: DefaultSpaceship },
             projectile: { body: projectile, size: [10, 10], backgroundColor: 'black', renderer: DefaultProjectile },
+            spaceship: { body: spaceship, size: [50, 50], backgroundColor: 'black', renderer: DefaultSpaceship },
             bottom: { body: bottom, size: [Constants.MAX_WIDTH, 10], backgroundColor: 'black', renderer: Bottom }
         }
     }
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     }
 })
 
