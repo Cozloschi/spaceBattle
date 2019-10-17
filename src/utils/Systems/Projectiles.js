@@ -7,13 +7,14 @@ const Projectiles = (entities, { events }) => {
     let eventCollisionId = events.findIndex(event => event.type === Constants.DISPATCH.PROJECTILE_BOTTOM)
     if (eventCollisionId > -1) {
         let world = entities.physics.world
- 
+
         //remove projectile from world
         Matter.World.remove(world, events[eventCollisionId].body)
         //remove from render
         delete entities[`${Constants.LABELS.PROJECTILE}${events[eventCollisionId].body.id}`]
 
         //create another 
+        //for (let i = 0; i < 2; i++) {
         let xCoord = Math.floor((Math.random() * Constants.MAX_WIDTH - 10) + 10)
         let projectile = Helpers.createProjectile(xCoord, Constants.MAX_HEIGHT / 12)
         Matter.World.add(world, [projectile])
@@ -23,6 +24,7 @@ const Projectiles = (entities, { events }) => {
             backgroundColor: 'black',
             renderer: DefaultProjectile
         };
+        //}
     }
     return entities
 };

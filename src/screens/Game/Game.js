@@ -33,6 +33,7 @@ class Game extends Component {
             this.setState({
                 running: false
             })
+            alert("YOU LOST")
         }
     }
 
