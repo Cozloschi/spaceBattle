@@ -10,7 +10,8 @@ export default {
     LABELS: {
         PROJECTILE: 'PROJECTILE',
         SPACESHIP: 'SPACESHIP',
-        BOTTOM: 'BOTTOM'
+        BOTTOM: 'BOTTOM',
+        MISSLE: 'MISSLE'
     },
     DISPATCH: {
         PROJECTILE_BOTTOM: 'PROJECTILE_BOTTOM',

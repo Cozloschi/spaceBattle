@@ -8,6 +8,7 @@ import Projectile from '../../utils/Systems/Projectiles'
 import Constants from '../../utils/Constants'
 import DefaultSpaceship from '../../components/spaceship/DefaultSpaceship'
 import DefaultProjectile from '../../components/projectile/DefaultProjectile'
+import DefaultMissle from '../../components/missle/DefaultMissle'
 import Bottom from '../../components/map/Bottom'
 import * as Helpers from '../../utils/Helpers'
 
@@ -33,7 +34,7 @@ class Game extends Component {
             this.setState({
                 running: false
             })
-            alert("YOU LOST")
+            alert("YOU LOST!")
         }
     }
 
@@ -41,11 +42,12 @@ class Game extends Component {
         let engine = Matter.Engine.create({ enableSleeping: false })
         let world = engine.world
         world.gravity.y = 0.2
-        let spaceship = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT / 1.2, 50, 50, { label: Constants.LABELS.SPACESHIP, density: 1, friction: 0.1 })
+        let spaceship = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT / 1.2, 50, 50, { label: Constants.LABELS.SPACESHIP, density: 1, friction: 0.4 })
+        let missle = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 1.2, Constants.MAX_HEIGHT - 80, 10, 10, { label: Constants.LABELS.MISSLE, density: 1.5, friction: 0.1 })
         let projectile = Helpers.createProjectile(Constants.MAX_WIDTH / 3, Constants.MAX_HEIGHT / 12)
-        let bottom = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT - 20, Constants.MAX_WIDTH, 10, { density: 1, isStatic: true, label: Constants.LABELS.BOTTOM })
+        let bottom = Matter.Bodies.rectangle(Constants.MAX_WIDTH / 2, Constants.MAX_HEIGHT - 70, Constants.MAX_WIDTH, 10, { density: 1, isStatic: true, label: Constants.LABELS.BOTTOM })
 
-        Matter.World.add(world, [projectile, spaceship, bottom])
+        Matter.World.add(world, [projectile, missle, spaceship, bottom])
 
         Matter.Events.on(engine, 'collisionStart', event => {
             let collision = Helpers.checkCollisionType(event)
@@ -61,6 +63,7 @@ class Game extends Component {
 
         return {
             physics: { engine: engine, world: world },
+            missle: { body: missle, size: [10, 10], backgroundColor: 'red', renderer: DefaultMissle },
             projectile: { body: projectile, size: [10, 10], backgroundColor: 'black', renderer: DefaultProjectile },
             spaceship: { body: spaceship, size: [50, 50], backgroundColor: 'black', renderer: DefaultSpaceship },
             bottom: { body: bottom, size: [Constants.MAX_WIDTH, 10], backgroundColor: 'black', renderer: Bottom }
